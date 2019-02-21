@@ -1,0 +1,36 @@
+<div class="wrapper">
+    <div>
+        <h2>Search</h2>
+        <form class="example-form">
+            <mat-form-field class="example-full-width">
+                <input type="text" placeholder="Search PostCode" matInput [formControl]="myControl" [matAutocomplete]="auto">
+                <mat-autocomplete [displayWith]="displayFn" (optionSelected)="getClosestSuburb($event.option.value)" #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of postcodeArray" [value]="option">
+                        {{option.name}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </form>
+    </div>
+
+    <div>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Suburbs</th>
+                    <th scope="col">#</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let selectedPostCode of currentSelectedPostcode">
+                    <th scope="row"></th>
+                    <td>{{selectedPostCode.name}}</td>
+                    <td>{{selectedPostCode.postcode}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div *ngIf="myControl.dirty && myControl.value.length > 2 && currentSelectedPostcode.length <= 0">
+            No Data Found
+        </div>
+    </div>
+</div>
